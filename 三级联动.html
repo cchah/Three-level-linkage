@@ -10,21 +10,23 @@
 	</style>
 </head>
 <body>
-	<label for="">
-		<select name="se_province" id="province">
-		</select>
-	</label>
-	<label for="">
-		<select name="se_city" id="city">
-		</select>
-	</label>
-	<label for="">
-		<select name="se_county" id="county">
-			<option value="">7</option>
-			<option value="">8</option>
-			<option value="">9</option>
-		</select>
-	</label>
+	<div id="three_level">
+		<label for="">
+			<select name="se_province" id="province">
+			</select>
+		</label>
+		<label for="">
+			<select name="se_city" id="city">
+			</select>
+		</label>
+		<label for="">
+			<select name="se_county" id="county">
+				<option value="">7</option>
+				<option value="">8</option>
+				<option value="">9</option>
+			</select>
+		</label>
+	</div>
 	
 	<script>
 		var data = {
@@ -64,35 +66,35 @@
 				1302: '黑龙江3.2',
 				1303: '黑龙江3.3'
 			},
-			1400: {
-				1401: '吉林1.1',
-				1402: '吉林1.2',
-				1403: '吉林1.3'
+			2100: {
+				2101: '吉林1.1',
+				2102: '吉林1.2',
+				2103: '吉林1.3'
 			},
-			1500: {
-				1501: '吉林2.1',
-				1502: '吉林2.2',
-				1503: '吉林2.3'
+			2200: {
+				2201: '吉林2.1',
+				2202: '吉林2.2',
+				2203: '吉林2.3'
 			},
-			1600: {
-				1601: '吉林3.1',
-				1602: '吉林3.2',
-				1603: '吉林3.3'
+			2300: {
+				2301: '吉林3.1',
+				2302: '吉林3.2',
+				2303: '吉林3.3'
 			},
-			1700: {
-				1701: '辽宁1.1',
-				1702: '辽宁1.2',
-				1703: '辽宁1.3'
+			3100: {
+				3101: '辽宁1.1',
+				3102: '辽宁1.2',
+				3103: '辽宁1.3'
 			},
-			1800: {
-				1801: '辽宁2.1',
-				1802: '辽宁2.2',
-				1803: '辽宁2.3'
+			3200: {
+				3201: '辽宁2.1',
+				3202: '辽宁2.2',
+				3203: '辽宁2.3'
 			},
-			1900: {
-				1901: '辽宁3.1',
-				1902: '辽宁3.2',
-				1903: '辽宁3.3'
+			3300: {
+				3301: '辽宁3.1',
+				3302: '辽宁3.2',
+				3303: '辽宁3.3'
 			},
 		}
 		var province = getId('province')
@@ -120,6 +122,7 @@
 		// 动态添加数据
 		province.addEventListener('change', function () {
 			province_value = this.value;
+			// console.log(this.value)
 			// 先删除city节点
 			var old_dom_city = city.querySelectorAll('option');
 			for(var i = 0; i < old_dom_city.length; i++){
@@ -145,26 +148,34 @@
 			
 		})
 		city.addEventListener('change', function () {
-
+			// console.log(this.value)
 			city_value = this.value
+			// console.log(city_value)
+			// 删除所有county的节点
 			var old_dom = county.querySelectorAll('option');
 			for(var i = 0; i < old_dom.length; i++){
-				console.log(1)
 				if(i !== 0) {
 					county.removeChild(old_dom[i])
 				}
 			}
-			// 给城市添加节点
+			// 给县添加节点
 			var county_create;
-			console.log(data[city_value])
-			for(var l in data[city_value][this.value]) {
-
+			// console.log(city_value,data[city_value])
+			for(var l in data[city_value]) {
+				// console.log(l, data[city_value])
 				county_create = creEl('option')
 				county_create.value = l
-				console.log(data[city_value][this.value])
-				county_create.innerHTML = data[city_value][this.value][l];
+				county_create.innerHTML = data[city_value][l];
 				county.appendChild(county_create);
 			}
+		})
+
+		county.addEventListener('change', function () {
+			county_value = this.value
+			// console.log(county_value);
+			// console.log(data[province_value])
+			// console.log(data[city_value])
+			// console.log(data[city_value][county_value])
 		})
 		// 添加默认值
 		for(var i = 0; i < select_doms.length; i++){
@@ -178,7 +189,6 @@
 		function addData (dom,data) {
 
 		}
-		
 		// 提交方法
 		function creEl (tag) {
 			return document.createElement(tag)
@@ -189,6 +199,8 @@
 		function querAll (val) {
 			return document.querySelectorAll(val)
 		}
+
+
 	</script>
 
 
